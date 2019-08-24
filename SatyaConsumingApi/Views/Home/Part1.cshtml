@@ -1,0 +1,133 @@
+﻿
+
+@{
+    ViewBag.Title = "Satyaprakash - Fetch data from WebApi using jquery";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div>
+    <div style="padding:10px ; align-content:center">
+        <fieldset>
+            <legend style="font-family:Arial Black;color:blue">Get Data From Web API Using JQuery As Per Selection</legend>
+
+            <input id="rad1GetData" type="radio" name="Full Name" class="btn btn-default" />
+            <label style="color:green">
+                Get Full Name
+            </label>
+
+            <input id="rad2GetData" type="radio" name="Full Name" class="btn btn-default" />
+            <label style="color:orangered">
+                Get First Name
+            </label>
+
+            <input id="rad3GetData" type="radio" name="Full Name" class="btn btn-default" />
+            <label style="color:red">
+                Get Last Name
+            </label>
+        </fieldset>
+    </div>
+
+    <div id="updatePanel" style="width:90%; margin:0 auto; padding:10px">
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+            $(document).ready(function () {
+                var apiBaseUrl = "http://localhost:47250/";
+                $('#rad1GetData').click(function () {
+                    $.ajax({
+                        url: apiBaseUrl + 'api/satya',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            var $table = $('<table/>').addClass('table table-responsive table-striped table-bordered');
+                            var $header = $('<thead/>').html('<tr><th style="background-color: Yellow;color: blue">Full Name</th><th style="background-color: Yellow;color: blue">Email</th><th style="background-color: Yellow;color: blue">City</th><th style="background-color: Yellow;color: blue">Country</th></tr>');
+                            $table.append($header);
+                            $.each(data, function (i, val) {
+                                var $row = $('<tr/>');
+                                $row.append($('<td/>').html(val.FirstName + ' ' + val.LastName));
+                                $row.append($('<td/>').html(val.EmailID));
+                                $row.append($('<td/>').html(val.City));
+                                $row.append($('<td/>').html(val.Country));
+                                $table.append($row);
+                            });
+                            $('#updatePanel').html($table);
+                        },
+                        error: function () {
+                            alert('Error!');
+                        }
+                    });
+                });
+
+                $('#rad2GetData').click(function () {
+                    $.ajax({
+                        url: apiBaseUrl + 'api/satya',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            var $table = $('<table/>').addClass('table table-responsive table-striped table-bordered');
+                            var $header = $('<thead/>').html('<tr><th style="background-color: Yellow;color: blue">First Name</th><th style="background-color: Yellow;color: blue">Email</th><th style="background-color: Yellow;color: blue">City</th><th style="background-color: Yellow;color: blue">Country</th></tr>');
+                            $table.append($header);
+                            $.each(data, function (i, val) {
+                                var $row = $('<tr/>');
+                                $row.append($('<td/>').html(val.FirstName));
+                                $row.append($('<td/>').html(val.EmailID));
+                                $row.append($('<td/>').html(val.City));
+                                $row.append($('<td/>').html(val.Country));
+                                $table.append($row);
+                            });
+                            $('#updatePanel').html($table);
+                        },
+                        error: function () {
+                            alert('Error!');
+                        }
+                    });
+                });
+
+                $('#rad3GetData').click(function () {
+                    $.ajax({
+                        url: apiBaseUrl + 'api/satya',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            var $table = $('<table/>').addClass('table table-responsive table-striped table-bordered');
+                            var $header = $('<thead/>').html('<tr><th style="background-color: Yellow;color: blue">Last Name</th><th style="background-color: Yellow;color: blue">Email</th><th style="background-color: Yellow;color: blue">City</th><th style="background-color: Yellow;color: blue">Country</th></tr>');
+                            $table.append($header);
+                            $.each(data, function (i, val) {
+                                var $row = $('<tr/>');
+                                $row.append($('<td/>').html(val.LastName));
+                                $row.append($('<td/>').html(val.EmailID));
+                                $row.append($('<td/>').html(val.City));
+                                $row.append($('<td/>').html(val.Country));
+                                $table.append($row);
+                            });
+                            $('#updatePanel').html($table);
+                        },
+                        error: function () {
+                            alert('Error!');
+                        }
+                    });
+                });
+            });
+    </script>
+}
+

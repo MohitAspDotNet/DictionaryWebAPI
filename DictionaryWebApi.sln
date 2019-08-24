@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatyaWebApi", "SatyaWebApi\SatyaWebApi.csproj", "{1509BCD1-420C-4F65-ABB9-2BD416340033}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatyaConsumingApi", "SatyaConsumingApi\SatyaConsumingApi.csproj", "{522F940F-BFF0-48BF-B522-7190BE5E4FFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{32CDA38B-91E3-4124-97FE-51DDD612F503}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1509BCD1-420C-4F65-ABB9-2BD416340033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1509BCD1-420C-4F65-ABB9-2BD416340033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1509BCD1-420C-4F65-ABB9-2BD416340033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1509BCD1-420C-4F65-ABB9-2BD416340033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{522F940F-BFF0-48BF-B522-7190BE5E4FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{522F940F-BFF0-48BF-B522-7190BE5E4FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{522F940F-BFF0-48BF-B522-7190BE5E4FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{522F940F-BFF0-48BF-B522-7190BE5E4FFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32CDA38B-91E3-4124-97FE-51DDD612F503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32CDA38B-91E3-4124-97FE-51DDD612F503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32CDA38B-91E3-4124-97FE-51DDD612F503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32CDA38B-91E3-4124-97FE-51DDD612F503}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Entities.Employee>
+
+@{
+    ViewBag.Title = "Satyaprakash - Fetch data from WebAPI using HTTPClient";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+    <div style="padding:10px ; align-content:center">
+        <fieldset>
+            <legend style="font-family:Arial Black;color:blue">Get Data From Web API Using HTTPClient</legend>
+        </fieldset>
+    </div>
+
+
+    <div id="updatePanel" style="width:90%; padding:10px; margin:0 auto;">
+        <table class="table table-responsive table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="background-color: Yellow;color: blue">Full Name</th>
+                    <th style="background-color: Yellow;color: blue">Email</th>
+                    <th style="background-color: Yellow;color: blue">City</th>
+                    <th style="background-color: Yellow;color: blue">Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model)
+               {
+                    <tr>
+                        <td>@i.FirstName @i.LastName</td>
+                        <td>@i.EmailID</td>
+                        <td>@i.City</td>
+                        <td>@i.Country</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

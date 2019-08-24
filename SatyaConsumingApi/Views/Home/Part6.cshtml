@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Part6";
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button4 {
+        border-radius: 9px;
+    }
+</style>
+
+
+@section scripts{
+    <script>
+                    function set()
+                    {
+                        var dictionary = "@ViewBag.Success";
+                        var arrDictionary = dictionary.trim().split(" ");
+                        if (arrDictionary.indexOf(document.getElementById("myInput").value) > -1) {
+                            alert("Word you have searched exist in dictionary");
+                        } else {
+                            alert("Word you have searched do not exist in dictionary");
+                        }
+                    };
+    </script>
+    }
+<fieldset>
+
+    <legend style="font-family:Arial Black;color:blue">Upload Files Here</legend>
+
+    <div class="container">
+        <div>
+
+            @if (ViewBag.Success != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    <strong>Well done !</strong> Successfully uploaded.
+                    Search in Dictionary
+                    <input type="text" id="myInput" data-myValue=null />
+                    <button type="button" id="details" onclick="set();">Check</button>
+
+                    <a href="@ViewBag.Success" target="_blank">Download File</a>
+
+                </div>
+            }
+            else if (ViewBag.Failed != null)
+            {
+                <div class="alert alert-error" role="alert">
+                    <strong>Error !</strong> @ViewBag.Failed
+                </div>
+            }
+        </div>
+        @using (Html.BeginForm("Part6", "Home", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                <input type="file" id="file" name="file" class="btn btn-primary" />
+            </div>
+            <input type="submit" value="Submit" class="button button4" />
+        }
+
+    </div>
+</fieldset>

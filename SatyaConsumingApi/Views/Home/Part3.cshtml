@@ -1,0 +1,286 @@
+﻿@{
+    ViewBag.Title = "Satyaprakash - Post Data To Web API Using jQuery With Validation";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js">
+
+</script>
+
+<style>
+    .error, #error {
+        color: red;
+        display: none;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button4 {
+        border-radius: 9px;
+    }
+</style>
+
+<div style="padding:10px ; align-content:center">
+    <fieldset>
+        <legend style="font-family:Arial Black;color:blue">Post Data To Web API Using jQuery With Validation</legend>
+    </fieldset>
+</div>
+
+<div class="container1">
+    <form id="frm1" role="form" style="max-width:500px">
+        <div class="form-group">
+            <div id="error">&nbsp;</div>
+        </div>
+        <div class="form-group">
+            <label for="firstname" style="color:blue">First Name:</label>
+            <input type="text" class="form-control" id="firstname" placeholder="please enter First Name">
+            <span class="error">Please provide First Name</span>
+        </div>
+        <div class="form-group">
+            <label for="lastname" style="color:blue">Last Name:</label>
+            <input type="text" class="form-control" id="lastname" placeholder="please enter Last Name">
+            <span class="error">Please provide Last Name</span>
+        </div>
+        <div class="form-group">
+            <label for="email" style="color:blue">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="please enter Email-Id">
+            <span class="error">Invalid email ID</span>
+        </div>
+        <div class="form-group">
+            <label for="city" style="color:blue">City:</label>
+            <input type="text" class="form-control" id="city" placeholder="please enter City">
+        </div>
+        <div class="form-group">
+            <label for="country" style="color:blue">Country:</label>
+            <input type="text" class="form-control" id="country" placeholder="please enter Country">
+        </div>
+        <button type="submit" class="button button4">Submit</button>
+    </form>
+</div>
+
+<div id="updatePanel" style="width:90%; margin:0 auto; padding:10px">
+
+</div>
+
+@section Scripts{
+    <script>
+            $(document).ready(function () {
+                var apiBaseUrl = "http://localhost:47250/";
+                $('#frm1').submit(function (e) {
+                    e.preventDefault();
+                    var isOK = ValidateForm();
+                    if (isOK) {
+                        var emp = {
+                            EmployeeID: 0,
+                            FirstName: $('#firstname').val().trim(),
+                            LastName: $('#lastname').val().trim(),
+                            EmailID: $('#email').val().trim(),
+                            City: $('#city').val().trim(),
+                            Country: $('#country').val().trim()
+                        };
+
+                        //Save
+                        $.ajax({
+                            url: apiBaseUrl+'api/satya',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: emp,
+                            success: function (d) {
+                                bootbox.alert('Data Is Successfully Saved!');
+                                var $table = $('<table/>').addClass('table table-responsive table-striped table-bordered');
+                                var $header = $('<thead/>').html('<tr><th style="background-color: Yellow;color: blue">Full Name</th><th style="background-color: Yellow;color: blue">Email</th><th style="background-color: Yellow;color: blue">City</th><th style="background-color: Yellow;color: blue">Country</th></tr>');
+                                $table.append($header);
+                                $.each(d, function (i, val) {
+                                    var $row = $('<tr/>');
+                                    $row.append($('<td/>').html(val.FirstName + ' ' + val.LastName));
+                                    $row.append($('<td/>').html(val.EmailID));
+                                    $row.append($('<td/>').html(val.City));
+                                    $row.append($('<td/>').html(val.Country));
+                                    $table.append($row);
+                                });
+                                $('#updatePanel').html($table);
+
+                                var frm = document.getElementById('frm1');
+                                frm.reset();
+                            },
+                            error: function () {
+                                $('#error').html('Error! please try with valid data.').show();
+                            }
+                        });
+                    }
+                });
+            });
+            function ValidateForm() {
+                var isAllValid = true;
+                $('.error').hide();
+                $('#error').empty();
+                $('.form-group').removeClass('has-error');
+                if ($('#firstname').val().trim()=="") {
+                    $('#firstname').focus();
+                    $('#firstname').siblings('.error').show();
+                    $('#firstname').parents('.form-group').addClass('has-error');
+                    isAllValid = false;
+                }
+                if ($('#lastname').val().trim() == "") {
+                    $('#lastname').focus();
+                    $('#lastname').siblings('.error').show();
+                    $('#lastname').parents('.form-group').addClass('has-error');
+                    isAllValid = false;
+                }
+                if ($('#email').val().trim() != "") {
+
+                    var expr = /^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                    if (!expr.test($('#email').val().trim())) {
+                        $('#email').focus();
+                        $('#email').siblings('.error').show();
+                        $('#email').parents('.form-group').addClass('has-error');
+                        isAllValid = false;
+                    }
+                }
+                return isAllValid;
+            }
+    </script>
+}
+
+
+@*Old
+        @{
+        ViewBag.Title = "Part3";
+    }
+    <style>
+        .error, #error {
+            color: red;
+            display: none;
+        }
+    </style>
+    <h2>Part3 - Post data to Web API using Jquery.</h2>
+    <div class="container1">
+        <form id="frm1" role="form" style="max-width:500px">
+            <div class="form-group">
+                <div id="error">&nbsp;</div>
+            </div>
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" class="form-control" id="firstname">
+                <span class="error">Please provide First Name</span>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" class="form-control" id="lastname">
+                <span class="error">Please provide Last Name</span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email">
+                <span class="error">Invalid email ID</span>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city">
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" class="form-control" id="country">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+
+    @section Scripts{
+        <script>
+                $(document).ready(function () {
+                    var apiBaseUrl = "http://localhost:47250/";
+                    $('#frm1').submit(function (e) {
+                        e.preventDefault();
+                        var isOK = ValidateForm();
+                        if (isOK) {
+                            var emp = {
+                                EmployeeID: 0,
+                                FirstName: $('#firstname').val().trim(),
+                                LastName: $('#lastname').val().trim(),
+                                EmailID: $('#email').val().trim(),
+                                City: $('#city').val().trim(),
+                                Country: $('#country').val().trim()
+                            };
+
+                            //Save
+                            $.ajax({
+                                url: apiBaseUrl+'api/satya',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: emp,
+                                success: function (d) {
+                                    alert('Successfully Saved!');
+                                    var frm = document.getElementById('frm1');
+                                    frm.reset();
+                                },
+                                error: function () {
+                                    $('#error').html('Error! please try with valid data.').show();
+                                }
+                            });
+                        }
+                    });
+                });
+                function ValidateForm() {
+                    var isAllValid = true;
+                    $('.error').hide();
+                    $('#error').empty();
+                    $('.form-group').removeClass('has-error');
+                    if ($('#firstname').val().trim()=="") {
+                        $('#firstname').focus();
+                        $('#firstname').siblings('.error').show();
+                        $('#firstname').parents('.form-group').addClass('has-error');
+                        isAllValid = false;
+                    }
+                    if ($('#lastname').val().trim() == "") {
+                        $('#lastname').focus();
+                        $('#lastname').siblings('.error').show();
+                        $('#lastname').parents('.form-group').addClass('has-error');
+                        isAllValid = false;
+                    }
+                    if ($('#email').val().trim() != "") {
+
+                        var expr = /^([a-zA-Z0-9_\-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                        if (!expr.test($('#email').val().trim())) {
+                            $('#email').focus();
+                            $('#email').siblings('.error').show();
+                            $('#email').parents('.form-group').addClass('has-error');
+                            isAllValid = false;
+                        }
+                    }
+                    return isAllValid;
+                }
+        </script>
+    }
+    Old*@

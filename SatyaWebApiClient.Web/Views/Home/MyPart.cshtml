@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "MyPart";
+}
+
+<h2>MyPart</h2>
+
+<div>
+    <div style="padding:10px">
+        <input id="btnGetData" type="button" value="Fetch data from WebApi" class="btn btn-default" />
+    </div>
+    <div id="updatePanel" style="width:90%; margin:0 auto; padding:10px">
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var apiBaseUrl = "https://localhost:47250/";
+            $('#btnGetData').click(function () {
+                $.ajax({
+                    url: apiBaseUrl + 'api/Satya',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        var $table = $('<table/>').addClass('table table-responsive table-striped table-bordered');
+                        var $header = $('<thead/>').html('<tr><th>Name</th><th>Email</th><th>City</th><th>Country</th></tr>');
+                        $table.append($header);
+                        $.each(data, function (i, val) {
+                            var $row = $('<tr/>');
+                            $row.append($('<td/>').html(val.FirstName + '' + val.LastName));
+                            $row.append($('<td/>').html(val.EmailID));
+                            $row.append($('<td/>').html(val.City));
+                            $row.append($('<td/>').html(val.Country));
+                            $table.append($row);
+                        });
+                        $('#updatePanel').html($table);
+                    },
+                    error: function () {
+                        alert('Error!');
+                    }
+                });
+            });
+        });
+    </script>
+}

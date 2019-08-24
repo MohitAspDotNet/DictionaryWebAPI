@@ -1,0 +1,143 @@
+﻿@model Entities.Employee
+
+@{
+    ViewBag.Title = "Satyaprakash - Post data to Web API using HTTPClient (in MVC client application) With Validation";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js">
+
+</script>
+
+<style>
+    span.field-validation-error {
+        color: red;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button4 {
+        border-radius: 9px;
+    }
+</style>
+
+
+<div style="padding:10px ; align-content:center">
+    <fieldset>
+        <legend style="font-family:Arial Black;color:blue">Post data to Web API using HTTPClient (in MVC client application) With Validation</legend>
+    </fieldset>
+</div>
+
+
+<div style="max-width:600px;">
+    @using (Html.BeginForm("Part4", "Home", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(a => a.FirstName)
+            @Html.TextBoxFor(a => a.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.FirstName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(a => a.LastName)
+            @Html.TextBoxFor(a => a.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.LastName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(a => a.EmailID)
+            @Html.TextBoxFor(a => a.EmailID, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.EmailID)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(a => a.City)
+            @Html.TextBoxFor(a => a.City, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.City)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(a => a.Country)
+            @Html.TextBoxFor(a => a.Country, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.Country)
+        </div>
+        <input id="btn" type="submit" value="Create" class="button button4" />
+
+        <div style="width:90%; padding:10px; margin:0 auto;">
+            @if (ViewBag.Result != null)
+            {
+                @*<div style="color:red">@ViewBag.Result</div>*@
+
+                <script>
+                    $(document).ready(function () {
+                        $('#btn').click(function () {
+                            $('#tableshow').hide();
+                        });
+
+                        bootbox.alert('@ViewBag.Result');
+                        $('#tableshow').show();
+                    });
+                </script>
+            }
+        </div>
+    }
+</div>
+
+@*System.NullReferenceException , Object reference not set to an instance of an object. This error due to without added for data retrieve comment line code in Part4() in homecontroller in webapplication*@
+<div id="tableshow" style="width:90%; padding:10px; margin:0 auto;">
+    <table class="table table-responsive table-striped table-bordered">
+        <thead>
+            <tr>
+                <th style="background-color: Yellow;color: blue">Full Name</th>
+                <th style="background-color: Yellow;color: blue">Email</th>
+                <th style="background-color: Yellow;color: blue">City</th>
+                <th style="background-color: Yellow;color: blue">Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in ViewBag.userdetails) 
+            {
+                <tr>
+                    <td>@i.FirstName @i.LastName</td>
+                    <td>@i.EmailID</td>
+                    <td>@i.City</td>
+                    <td>@i.Country</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@*System.NullReferenceException , Object reference not set to an instance of an object.*@
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
